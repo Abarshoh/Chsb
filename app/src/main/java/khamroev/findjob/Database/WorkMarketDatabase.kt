@@ -21,19 +21,19 @@ abstract class WorkMarketDatabase : RoomDatabase() {
     abstract fun workDao(): WorkDao
 
     companion object {
+        private const val DATABASE_NAME = "work_market"
+
         @Volatile
         private var INSTANCE: WorkMarketDatabase? = null
 
-        fun getDatabase(context: Context): WorkMarketDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    WorkMarketDatabase::class.java,
-                    "work_market_database"
-                ).build()
-                INSTANCE = instance
-                instance
+        fun getInstance(context: Context): WorkMarketDatabase  {
+            if (INSTANCE == null) {
+                INSTANCE = Room.databaseBuilder(context, WorkMarketDatabase::class.java, DATABASE_NAME)
+                    .allowMainThreadQueries()
+                    .build()
             }
+
+            return INSTANCE!!
         }
     }
 }
