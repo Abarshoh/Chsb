@@ -23,6 +23,7 @@ abstract class WorkMarketDatabase : RoomDatabase() {
     companion object {
         private const val DATABASE_NAME = "work_market"
 
+
         @Volatile
         private var INSTANCE: WorkMarketDatabase? = null
 
